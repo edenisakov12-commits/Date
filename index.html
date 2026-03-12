@@ -4,95 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Date - Eden & Yarden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Assistant:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --primary-pink: #ff4d6d;
-            --soft-pink: #ffccd5;
-            --white: #ffffff;
-            --text-dark: #333;
+        :root { 
+            --soft-rose: #f8e1e1; 
+            --deep-mauve: #4a3f54; 
+            --accent: #ff8fa3; 
+            --white: #ffffff; 
+        }
+        
+        body { 
+            font-family: 'Assistant', sans-serif; 
+            background: linear-gradient(to bottom, #fdfaf8, #f8e1e1); 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+            color: var(--deep-mauve); 
+            padding-bottom: 100px; 
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--soft-pink), #fff5f7);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+        header h1 { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 3.5rem; 
+            margin: 30px 0 10px; 
+            color: var(--accent);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
-        .card {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.25);
-            text-align: center;
-            max-width: 350px;
-            width: 100%;
-            animation: floating 3.5s ease-in-out infinite;
+        .live-note-preview { 
+            background: var(--white); 
+            border-radius: 20px; 
+            padding: 20px; 
+            margin-bottom: 25px; 
+            width: 85%; 
+            text-align: center; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            border: 1px solid var(--soft-rose);
+            font-style: italic;
         }
 
-        @keyframes floating {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+        .main-wrapper { 
+            width: 90%; 
+            max-width: 400px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
         }
 
-        h1 { 
-            color: var(--primary-pink); 
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 2px;
+        .cat-card { 
+            background: var(--white); 
+            border-radius: 25px; 
+            padding: 25px; 
+            text-align: center; 
+            cursor: pointer; 
+            box-shadow: 0 8px 15px rgba(0,0,0,0.04); 
+            transition: 0.3s ease; 
+            border: 1px solid #eee; 
         }
 
-        p {
-            color: var(--text-dark);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+        .cat-card:active { transform: scale(0.95); }
+        .cat-card .emoji { font-size: 2.5rem; display: block; margin-bottom: 5px; }
+        .cat-card span { font-weight: 700; font-size: 1.2rem; }
+
+        .bottom-nav { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 15px; 
+            right: 15px; 
+            background: rgba(255,255,255,0.95); 
+            backdrop-filter: blur(10px); 
+            display: flex; 
+            justify-content: space-around; 
+            padding: 15px; 
+            border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
         }
 
-        .btn-love {
-            background-color: var(--primary-pink);
+        .nav-item { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            cursor: pointer; 
+            font-size: 0.8rem; 
+            font-weight: 700; 
+            color: #aaa; 
+            transition: 0.2s;
+        }
+
+        .nav-item.active { color: var(--accent); }
+        .nav-item span { font-size: 1.6rem; margin-bottom: 3px; }
+
+        /* כפתור מיוחד לירדן */
+        .yarden-btn {
+            background: var(--accent);
             color: white;
-            border: none;
-            padding: 15px 30px;
+            padding: 10px 20px;
             border-radius: 50px;
-            cursor: pointer;
-            font-size: 1.2rem;
+            border: none;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .btn-love:hover {
-            transform: scale(1.05);
-            background-color: #ff3355;
-        }
-
-        #status { 
-            margin-top: 20px; 
-            font-size: 0.85rem; 
-            color: #888;
-            min-height: 20px;
+            margin-top: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Date</h1>
-        <p>עדן ❤️ ירדן (ורום)</p>
-        <button class="btn-love" onclick="sendLove()">שלח אהבה ✨</button>
-        <div id="status">מוכן לשליחה...</div>
+    <header><h1>Date</h1></header>
+
+    <div class="main-wrapper" id="menu-screen">
+        <div class="live-note-preview" id="main-preview">מתחבר לענן... ✨</div>
+        
+        <div class="cat-card" onclick="triggerLove('דייט בבית נבחר! 🏠')">
+            <span class="emoji">🏡</span><span>דייט בבית</span>
+        </div>
+        
+        <div class="cat-card" onclick="triggerLove('יוצאים לבלות! 🥂')">
+            <span class="emoji">🥂</span><span>יוצאים החוצה</span>
+        </div>
+
+        <button class="yarden-btn" onclick="sendLoveSignal()">כפתור מיוחד לירדן ❤️</button>
     </div>
 
+    <nav class="bottom-nav">
+        <div class="nav-item active"><span>🏠</span>בית</div>
+        <div class="nav-item" onclick="alert('רשימת ההתלבטויות בטעינה...')"><span>🤔</span>אולי</div>
+        <div class="nav-item" onclick="alert('כל הזכרונות שלנו כאן ✨')"><span>🎬</span>עשינו</div>
+        <div class="nav-item" onclick="alert('כותב מכתב חדש...')"><span>📝</span>מכתב</div>
+    </nav>
+
     <script>
-        // פונקציה לניהול מפתחות ב-localStorage למניעת דליפה ל-GitHub
-        function getCredentials() {
+        // פונקציה לקבלת מפתחות מהזיכרון או מהמשתמש
+        function getKeys() {
             let apiKey = localStorage.getItem('DATE_API_KEY');
             let binId = localStorage.getItem('DATE_BIN_ID');
 
@@ -104,53 +149,60 @@
                 binId = prompt("נא להזין BIN ID (חד פעמי):");
                 if (binId) localStorage.setItem('DATE_BIN_ID', binId);
             }
-
             return { apiKey, binId };
         }
 
-        async function sendLove() {
-            const { apiKey, binId } = getCredentials();
-            
+        // טעינת הודעה מהענן
+        async function loadNote() {
+            const { apiKey, binId } = getKeys();
             if (!apiKey || !binId) {
-                alert("חובה להזין פרטים כדי שהאפליקציה תעבוד.");
+                document.getElementById('main-preview').innerText = "אנא רעננו והזינו מפתחות 🔑";
                 return;
             }
 
-            const statusDiv = document.getElementById('status');
-            statusDiv.innerText = "מעדכן את הענן...";
-
-            // אפקט קונפטי
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff4d6d', '#ff8fa3', '#ffffff']
-            });
-
             try {
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': apiKey
-                    },
-                    body: JSON.stringify({ 
-                        last_interaction: new Date().toLocaleString('he-IL'),
-                        app_name: "Date",
-                        status: "Love is in the air"
-                    })
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+                    headers: { 'X-Master-Key': apiKey }
                 });
-
-                if (response.ok) {
-                    statusDiv.innerText = "נשמר בהצלחה! ❤️";
-                } else {
-                    throw new Error("שגיאה בחיבור");
-                }
-            } catch (error) {
-                statusDiv.innerText = "תקלה בחיבור לענן.";
-                console.error(error);
+                const data = await res.json();
+                document.getElementById('main-preview').innerText = data.record.message || "עדן ❤️ ירדן";
+            } catch(e) {
+                document.getElementById('main-preview').innerText = "שגיאה בסנכרון ❌";
             }
         }
+
+        // פונקציית קונפטי והודעה
+        function triggerLove(msg) {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff8fa3', '#f8e1e1']
+            });
+            alert(msg);
+        }
+
+        // שליחת עדכון לענן (כפתור ירדן)
+        async function sendLoveSignal() {
+            const { apiKey, binId } = getKeys();
+            const preview = document.getElementById('main-preview');
+            preview.innerText = "שולח אהבה לירדן...";
+            
+            try {
+                await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': apiKey },
+                    body: JSON.stringify({ message: "ירדן שלחה אהבה! ❤️", last_update: new Date().toLocaleString() })
+                });
+                triggerLove("הודעה נשלחה בהצלחה!");
+                loadNote();
+            } catch (e) {
+                alert("תקלה בשליחה");
+            }
+        }
+
+        // הפעלה ראשונית
+        loadNote();
     </script>
 </body>
 </html>
