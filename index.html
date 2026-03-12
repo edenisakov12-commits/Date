@@ -80,9 +80,6 @@
         .btn-stack { display: flex; flex-direction: column; gap: 10px; width: 100%; }
         .btn-modal { padding: 16px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1rem; }
         
-        .list-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; text-align: right; }
-        .delete-btn { color: #ff4d4d; cursor: pointer; font-size: 1.2rem; padding: 5px; }
-
         .doni-title { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin: 10px 0; }
         #doniText { font-size: 1.3rem; line-height: 1.5; margin: 25px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; font-style: italic; }
     </style>
@@ -153,25 +150,47 @@
 
     <script>
         const database = {
-            home: ["ערב סושי ויין יוקרתי", "מרתון סרטים עם פופקורן וכרבוליות", "ספא ביתי עם עיסוי בשמנים", "פיקניק על השטיח בסלון", "ערב טעימות גבינות ויין", "שיחה עמוקה מול נרות דולקים", "סדנת ציור משותפת", "ערב קוקטיילים ביתי", "תחרות בישול זוגית", "פיצה ביתית מאפס", "ערב שאלות 'עד כמה אנחנו מכירים'"],
-            out: ["המרינה באשקלון בשקיעה", "טיול לילה בגן הלאומי", "גלידה וסיבוב על החוף", "ערב בבר מקומי", "טיול לילה בטיילת החדשה", "צפייה בכוכבים בדיונות", "ארוחת ערב איטלקית במסעדה", "פיקניק בחוף זיקים", "ביקור ביקב באזור"]
+            home: [
+                "ערב סושי ויין יוקרתי", "מרתון סרטים עם פופקורן וכרבוליות", "ספא ביתי עם עיסוי בשמנים", "פיקניק על השטיח בסלון", "ערב טעימות גבינות ויין", 
+                "שיחה עמוקה מול נרות דולקים", "סדנת ציור משותפת על קנבס", "ערב קוקטיילים ביתי בהכנה עצמית", "תחרות בישול זוגית (מנה מנצחת!)", 
+                "ערב משחקי קופסא של פעם", "הקרנת סרטון חתונה/זכרונות מהטלפון", "ערב שוקו חם ומרשמלו מול סרט נוסטלגי", "סדנת אפייה של קינוח מושחת", 
+                "בניית לוח חזון (Vision Board) משותף", "ערב פלייליסטים - כל אחד בוחר שירים לשני", "פיצה ביתית מאפס עם תוספות משוגעות", 
+                "ערב שאלות 'עד כמה אנחנו מכירים'", "סדנת יוגה או מתיחות זוגית", "ערב גלידה עם כל התוספות האפשריות"
+            ],
+            out: [
+                "המרינה באשקלון בשקיעה", "טיול לילה בגן הלאומי", "גלידה וסיבוב על החוף", "ערב בבר מקומי עם מוזיקה טובה", "טיול לילה בטיילת החדשה", 
+                "צפייה בכוכבים בדיונות של ניצנים", "ארוחת ערב איטלקית במסעדה", "פיקניק בחוף זיקים", "ביקור ביקב באזור לכיש", "סרט בקולנוע עם פופקורן ענק", 
+                "קטיף עצמי במושב קרוב", "נסיעה לעצירה לקפה בתחנת דלק נידחת", "סיבוב בשוק של אשקלון בשישי בבוקר", "סדנת קרמיקה או יצירה באזור", 
+                "טיול רגלי בנמל בשעות הערב", "ערב באולינג תחרותי", "ישיבה על בירה מול הים", "חיפוש אחר הקינוח הכי טוב בעיר", "נסיעה ארוכה עם מוזיקה טובה בלי יעד"
+            ]
         };
 
-        const doniQuotes = ["דוני, היא הלב של הבית והאמא הכי מדהימה לרום.", "אל תשכח - היא החברה הכי טובה שלך. נשיקה ארוכה!", "תזכורת: היא הכי יפה בעולם בעיניים שלך.", "זכית בכל הקופה, דוני. תראה את המשפחה שבניתם."];
+        const doniQuotes = [
+            "דוני, מבט אחד עליה יזכיר לך שהיא הלב של הבית והאמא הכי מדהימה שיכולת לבקש לרום.",
+            "בתוך השגרה, אל תשכח - היא החברה הכי טובה שלך. תן לה נשיקה ארוכה היום.",
+            "דוני, תזכורת: היא צריכה לשמוע ממך שהיא עדיין הכי יפה בעולם בעיניים שלך.",
+            "תודה לה על כל האהבה והחום שהיא מכניסה לחיים שלך ושל רום בכל יום.",
+            "להיות הורים זה אתגר, אבל לעשות את זה יחד איתה זה הפרס הכי גדול שיש.",
+            "קח נשימה עמוקה. תסתכל על המשפחה שבניתם. זכית בכל הקופה, דוני.",
+            "משימה קטנה: הערב, כשהקטן ישן, תכין לה משהו לשתות ותקשיב לה בלי טלפון.",
+            "היא הלב הפועם של הבית הזה. אל תיתן ליום לעבור בלי שהיא תרגיש כמה היא מוערכת."
+        ];
+
         let quotePool = [...doniQuotes];
 
         function shareWhatsApp(type) {
             let text = "";
-            if(type === 'baby') text = "רום רעב! 🍼 יש להביא מטרנה בהקדם 🍼";
-            if(type === 'milk') text = "לא לשכוח להביא חלב בדרך הביתה! 🥛";
-            if(type === 'home') text = "מתי הגעה הביתה? יש המתנה בגעגועים! 🏠";
-            if(type === 'love') text = "רציתי להגיד שהאהבה כאן היא הכי גדולה בעולם ❤️";
+            if(type === 'baby') text = "רום רעב! 🍼 יש להביא מטרנה בהקדם 🍼🍼🍼";
+            if(type === 'milk') text = "לא לשכוח להביא חלב בדרך הביתה! 🥛🛒 שיהיה לנו לקפה של הבוקר ☕";
+            if(type === 'home') text = "מתי הגעה הביתה? יש המתנה בגעגועים! 🏠❤️";
+            if(type === 'love') {
+                const loves = ["רציתי להגיד שהאהבה כאן היא הכי גדולה בעולם ❤️", "יש כאן אבא מדהים ובעל מושלם, תודה על הכל ✨", "ציפייה גדולה לזמן שלנו יחד בערב... 🥰"];
+                text = loves[Math.floor(Math.random() * loves.length)];
+            }
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        // ניהול רשימות בזיכרון המקומי
-        let state = JSON.parse(localStorage.getItem('EY_SAVED_LISTS_FINAL')) || { maybe: [], done: [] };
-        let currentCat = '', currentIdea = '', currentListType = '';
+        let state = JSON.parse(localStorage.getItem('EY_STATE_V2')) || { maybe: [], done: [] };
 
         function openGenerator(type) {
             currentCat = type; reroll();
@@ -182,37 +201,16 @@
             const list = database[currentCat];
             currentIdea = list[Math.floor(Math.random() * list.length)];
             document.getElementById('ideaText').innerText = currentIdea;
-            confetti({ particleCount: 40, colors: ['#D4AF37'], zIndex: 3000 });
+            confetti({ particleCount: 50, colors: ['#D4AF37'], zIndex: 3000 });
         }
 
         function saveTo(target) {
             if(!state[target].includes(currentIdea)) {
                 state[target].push(currentIdea);
-                localStorage.setItem('EY_SAVED_LISTS_FINAL', JSON.stringify(state));
+                localStorage.setItem('EY_STATE_V2', JSON.stringify(state));
             }
             confetti({ particleCount: 150, shapes: [target==='done'?'heart':'circle'], zIndex: 3000 });
             closeAll();
-        }
-
-        function showList(type) {
-            currentListType = type;
-            document.getElementById('listTitle').innerText = type === 'maybe' ? 'התלבטויות 🤔' : 'הדייטים שלנו 🎬';
-            const body = document.getElementById('listBody');
-            
-            body.innerHTML = state[type].length ? state[type].map((item, i) => `
-                <div class="list-item">
-                    <span class="delete-btn" onclick="deleteItem(${i})">🗑️</span>
-                    <span>${item}</span>
-                </div>
-            `).join('') : "<p style='text-align:center; opacity:0.5;'>הרשימה ריקה...</p>";
-            
-            document.getElementById('listModal').style.display = 'flex';
-        }
-
-        function deleteItem(index) {
-            state[currentListType].splice(index, 1);
-            localStorage.setItem('EY_SAVED_LISTS_FINAL', JSON.stringify(state));
-            showList(currentListType);
         }
 
         function openDoniModal() {
@@ -221,6 +219,24 @@
             const quote = quotePool.splice(randomIndex, 1)[0];
             document.getElementById('doniText').innerText = quote;
             document.getElementById('doniModal').style.display = 'flex';
+            confetti({ particleCount: 100, shapes: ['heart'], colors: ['#ff0000', '#D4AF37'], zIndex: 3000 });
+        }
+
+        function showList(type) {
+            document.getElementById('listTitle').innerText = type === 'maybe' ? 'התלבטויות' : 'הדייטים שלנו';
+            document.getElementById('listBody').innerHTML = state[type].map((item, i) => `
+                <div style="padding:15px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                    <span>${item}</span>
+                    <span style="color:#ccc; cursor:pointer; font-size:1.2rem;" onclick="deleteItem('${type}', ${i})">🗑️</span>
+                </div>
+            `).join('') || "<p style='text-align:center; opacity:0.5;'>אין פריטים עדיין...</p>";
+            document.getElementById('listModal').style.display = 'flex';
+        }
+
+        function deleteItem(type, i) {
+            state[type].splice(i, 1);
+            localStorage.setItem('EY_STATE_V2', JSON.stringify(state));
+            showList(type);
         }
 
         function closeAll() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
