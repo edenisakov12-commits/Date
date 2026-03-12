@@ -3,40 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eden & Yarden | Life with Baby</title>
+    <title>Eden & Yarden | Luxury Private</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root { --gold: #D4AF37; --dark: #1a1a1a; --bg: #fdfaf8; --white: #ffffff; --soft-gold: rgba(212, 175, 55, 0.2); }
-        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); color: var(--dark); margin: 0; padding-bottom: 140px; overflow-x: hidden; }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); color: var(--dark); margin: 0; padding-bottom: 140px; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
 
-        .header { padding: 35px 20px 5px; text-align: center; }
-        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.8rem; margin: 0; color: var(--dark); }
+        .header { padding: 25px 20px 5px; text-align: center; flex-shrink: 0; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; color: var(--dark); }
 
         /* בועת מכתב משופרת */
         .top-letter-box {
             background: var(--white); border: 1.5px solid var(--gold); border-radius: 12px;
-            margin: 10px auto 30px; width: 85%; padding: 15px; position: relative;
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1); text-align: center;
+            margin: 10px auto 20px; width: 85%; padding: 15px; position: relative;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1); text-align: center; min-height: 50px;
         }
-        #top-msg { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; margin: 0; min-height: 1.2em; }
+        #top-msg { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; margin: 0; color: var(--dark); }
 
-        /* הגדלת כפתורי דייטים */
-        .main-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 0 25px; }
+        /* כפתורים זה לצד זה */
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; flex-grow: 1; align-content: flex-start; }
         .card { 
-            background: var(--white); border-radius: 30px; padding: 50px 20px; text-align: center; 
-            cursor: pointer; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border: 1px solid var(--soft-gold);
+            background: var(--white); border-radius: 25px; padding: 40px 10px; text-align: center; 
+            cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.04); border: 1px solid var(--soft-gold);
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .card:active { transform: scale(0.96); }
-        .card .emoji { font-size: 3.5rem; display: block; margin-bottom: 15px; }
-        .card span { font-weight: 600; font-size: 1.2rem; letter-spacing: 1px; color: var(--dark); }
+        .card:active { transform: scale(0.95); }
+        .card .emoji { font-size: 3rem; display: block; margin-bottom: 10px; }
+        .card span { font-weight: 600; font-size: 1rem; color: var(--dark); }
 
         /* כפתור דוני זהב */
         .yarden-btn {
-            position: fixed; bottom: 130px; left: 25px; background: var(--gold);
-            color: var(--dark); border: 2px solid var(--white); padding: 12px 25px;
-            border-radius: 50px; font-weight: 800; font-size: 1rem; z-index: 1001; 
+            position: fixed; bottom: 135px; left: 25px; background: var(--gold);
+            color: var(--white); border: 2px solid var(--white); padding: 12px 28px;
+            border-radius: 50px; font-weight: 800; font-size: 1.1rem; z-index: 1001; 
             cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
@@ -47,58 +47,73 @@
             justify-content: center; align-items: center;
         }
         .modal-content { 
-            background: var(--white); width: 88%; max-width: 400px; border-radius: 40px; 
-            padding: 40px 30px; text-align: center; position: relative;
+            background: var(--white); width: 85%; max-width: 380px; border-radius: 35px; 
+            padding: 35px; text-align: center; position: relative;
         }
-        .close-btn { position: absolute; top: 20px; left: 25px; font-size: 1.5rem; cursor: pointer; color: var(--gold); }
         
-        .dice-icon { font-size: 3.5rem; cursor: pointer; display: inline-block; margin-bottom: 15px; }
-        .idea-display { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin: 25px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; color: var(--dark); }
+        /* עיצוב מיוחד למודאל דוני */
+        .doni-modal { background: linear-gradient(135deg, #fff 0%, #fff9e6 100%); border: 3px solid var(--gold); }
+
+        .close-btn { position: absolute; top: 15px; left: 20px; font-size: 1.5rem; cursor: pointer; color: var(--gold); }
+        .dice-icon { font-size: 3.5rem; cursor: pointer; display: inline-block; margin-bottom: 10px; }
+        .idea-display { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 20px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.3; }
         
-        .btn-stack { display: flex; flex-direction: column; gap: 15px; }
-        .btn-action { background: var(--dark); color: var(--gold); border: 1px solid var(--gold); padding: 18px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
+        .btn-stack { display: flex; flex-direction: column; gap: 12px; }
+        .btn-action { background: var(--dark); color: var(--gold); border: 1px solid var(--gold); padding: 15px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1rem; }
         .btn-action.primary { background: var(--gold); color: white; border: none; }
 
-        .list-container { max-height: 350px; overflow-y: auto; text-align: right; }
-        .list-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .list-container { max-height: 300px; overflow-y: auto; text-align: right; }
+        .list-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
 
         /* ניווט תחתון */
         .bottom-nav {
             position: fixed; bottom: 25px; left: 20px; right: 20px;
             background: var(--dark); display: flex; justify-content: space-around;
-            padding: 20px; border-radius: 35px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); z-index: 1500;
+            padding: 18px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); z-index: 1500;
         }
-        .nav-link { color: #666; text-align: center; cursor: pointer; font-size: 0.8rem; }
+        .nav-link { color: #555; text-align: center; cursor: pointer; font-size: 0.75rem; }
         .nav-link.active { color: var(--gold); }
-        .nav-link span { display: block; font-size: 1.8rem; margin-bottom: 5px; }
+        .nav-link span { display: block; font-size: 1.6rem; margin-bottom: 4px; }
     </style>
 </head>
 <body>
 
     <div class="header"><h1>Eden & Yarden</h1></div>
 
-    <div class="top-letter-box"><p id="top-msg">מחכה למכתב שלכם... ✨</p></div>
+    <div class="top-letter-box">
+        <p id="top-msg">טוען מכתב... ✨</p>
+    </div>
 
     <div class="main-grid">
         <div class="card" onclick="openGenerator('home')">
-            <span class="emoji">🏡</span><span>דייט בבית</span>
+            <span class="emoji">🏡</span><span>בבית</span>
         </div>
         <div class="card" onclick="openGenerator('out')">
-            <span class="emoji">🥂</span><span>יוצאים בחוץ</span>
+            <span class="emoji">🥂</span><span>בחוץ</span>
         </div>
     </div>
 
-    <button class="yarden-btn" onclick="yardenMagic()">דוני 🔐</button>
+    <button class="yarden-btn" onclick="openDoniModal()">דוני 🔐</button>
 
     <div id="genModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAll()">✕</span>
             <div class="dice-icon" onclick="reroll()">🎲</div>
-            <div class="idea-display" id="ideaText">בוחרים...</div>
+            <div class="idea-display" id="ideaText">בוחרים דייט...</div>
             <div class="btn-stack">
                 <button class="btn-action" onclick="saveTo('maybe')">להוסיף להתלבטויות 🤔</button>
                 <button class="btn-action primary" onclick="saveTo('done')">את זה אנחנו רוצים! ✨</button>
             </div>
+        </div>
+    </div>
+
+    <div id="doniModal" class="modal">
+        <div class="modal-content doni-modal">
+            <span class="close-btn" onclick="closeAll()">✕</span>
+            <div style="font-size: 3rem; margin-bottom: 10px;">👑</div>
+            <h2 style="font-family:'Playfair Display'; color:var(--gold); margin:0;">לעיני דוני בלבד</h2>
+            <div id="doniText" class="idea-display" style="font-size: 1.3rem;"></div>
+            <button class="btn-action primary" onclick="closeAll()">תודה אהובתי ❤️</button>
         </div>
     </div>
 
@@ -112,21 +127,22 @@
 
     <nav class="bottom-nav">
         <div class="nav-link" onclick="showList('maybe')"><span>🤔</span>התלבטויות</div>
-        <div class="nav-link" onclick="showList('done')"><span>🎬</span>הדייטים שלנו</div>
+        <div class="nav-link" onclick="showList('done')"><span>🎬</span>הדייטים</div>
         <div class="nav-link" onclick="createNewLetter()"><span>📝</span>מכתב</div>
     </nav>
 
     <script>
         const database = {
-            home: [
-                "ערב סושי ביתי (מזמינים ומסדרים יפה)", "מרתון סרטים כשהתינוק ישן", "סדנת מסאז' זוגית בסלון", "פיקניק לילי במרפסת", "ערב שוקו ומרשמלו מול סדרה", "ערב טעימות יין וגבינות בבית", "משחקי קופסא זוגיים", "סדנת ציור ויין בסלון", "שיחה על תמונות ישנות שלנו", "ערב שאלות עומק (משחק קלפים)", "בישול ארוחה רומנטית ביחד", "ערב קוקטיילים ביתי", "בניית לוח חזון לעתיד שלנו", "ערב פונדו שוקולד ופירות", "ערב פלייליסט נוסטלגי מתקופת הדייטים", "תחרות אפייה זוגית (מה שיש במקרר)", "בניית פאזל 1000 חלקים", "ערב ספא ביתי עם אמבטיה מפנקת", "צפייה בהרצאת TED מעניינת ודיון", "ערב פיצה ביתית מאפס", "שיעור יוגה זוגי מיוטיוב", "כתיבת מכתבים עתידיים אחד לשני", "ערב קריוקי ביוטיוב (בווליום נמוך!)", "סדנת קיפול נייר (אוריגמי) זוגית", "ערב משחקי וידאו של פעם"
-            ],
-            out: [
-                "הליכה רומנטית במרינה אשקלון", "פיקניק שקיעה בגן הלאומי אשקלון", "דייט גלידה לילי במרינה", "ביקור ביקב בסביבה (לכיש/חבל שלום)", "סיור טעימות בשוק אשקלון", "צפייה בשקיעה מחוף בר כוכבא", "ערב בירה בבר מקומי באשקלון", "דייט בוקר ספונטני בקפה מול הים", "טיול ערב בטיילת החדשה", "מסעדה טובה במרינה אשקלון", "סרט בקולנוע (אם יש בייביסיטר)", "טיול קצר בדיונות באזור ניצנים", "ערב באולינג (מהיר וכיפי)", "דייט קניון וקפה (קלאסי וקל)", "שיעור גלישה זוגי (סופ\"ש)", "ביקור בגלריית אומנות באזור", "מיני גולף או חדר בריחה קרוב", "דייט בוקר בחוף הים", "נסיעה לשקיעה בחוף זיקים", "ארוחת ערב במסעדה איטלקית באזור", "דייט 'קניות לבית' אבל עם קפה מפנק", "ביקור במשתלה וקניית עציץ משותף", "הליכה לילית בטיילת צפונית", "ישיבה על הבר במסעדה אסיאתית", "דייט 'חצי שעה' בים רק לנשום אוויר"
-            ]
+            home: ["ערב סושי ביתי", "מרתון סרטים כשהתינוק ישן", "סדנת מסאז' זוגית", "פיקניק לילי במרפסת", "ערב שוקו ומרשמלו", "טעימות יין וגבינות", "משחקי קופסא זוגיים", "סדנת ציור ויין", "ערב שאלות עומק", "בישול ארוחה רומנטית", "ערב קוקטיילים ביתי", "בניית לוח חזון", "פונדו שוקולד ופירות", "ערב פלייליסט נוסטלגי", "ערב פיצה ביתית"],
+            out: ["המרינה באשקלון", "הגן הלאומי אשקלון", "גלידה לילית במרינה", "יקב באזור לכיש", "סיור שוק אשקלון", "שקיעה בחוף בר כוכבא", "בירה בבר מקומי", "קפה בוקר מול הים", "טיילת אשקלון החדשה", "מסעדה במרינה", "חוף ניצנים בשקיעה", "נסיעה לחוף זיקים", "ארוחה איטלקית באזור", "קטיף עצמי במושבים", "ערב באולינג"]
         };
 
-        const yardenPrompts = ["דוני, תסתכל עליה - היא האישה הכי יפה בעולם.", "תזכורת: לקנות פרחים בדרך הביתה.", "תביא לה חיבוק ארוך של 30 שניות.", "שלח לה הודעה: 'זכיתי בך כאשתי'. ❤️"];
+        const doniQuotes = [
+            "דוני, היא האישה של חייך. תזכיר לה את זה היום.",
+            "חיבוק של 30 שניות - זו המשימה שלך לעכשיו.",
+            "תזכורת: הודעת 'אני אוהב אותך' באמצע היום עושה קסמים.",
+            "זכית במישהי מיוחדת במינה. תהיה הגבר שמגיע לה."
+        ];
 
         let state = { maybe: [], done: [], lastMsg: "עדן ❤️ ירדן" };
         let currentCat = '', currentIdea = '';
@@ -150,7 +166,9 @@
 
         async function saveData() {
             const keys = getAuth();
-            document.getElementById('top-msg').innerText = state.lastMsg; // עדכון מקומי מיידי
+            // עדכון מיידי במסך
+            document.getElementById('top-msg').innerText = state.lastMsg;
+            
             await fetch(`https://api.jsonbin.io/v3/b/${keys.binId}`, {
                 method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': keys.apiKey },
                 body: JSON.stringify(state)
@@ -166,7 +184,6 @@
             const list = database[currentCat];
             currentIdea = list[Math.floor(Math.random() * list.length)];
             document.getElementById('ideaText').innerText = currentIdea;
-            // אפקט קוביות מעל הכל
             confetti({ particleCount: 60, spread: 70, scalar: 3, shapes: ['circle'], colors: ['#D4AF37'], zIndex: 3000 });
         }
 
@@ -182,7 +199,7 @@
             const body = document.getElementById('listBody');
             body.innerHTML = state[type].map((item, i) => `
                 <div class="list-item"><span>${item}</span><span onclick="deleteItem(${i})" style="cursor:pointer">🗑️</span></div>
-            `).join('') || '<p>ריק...</p>';
+            `).join('') || '<p>הרשימה ריקה...</p>';
             document.getElementById('listModal').style.display = 'flex';
         }
 
@@ -192,15 +209,17 @@
         }
 
         function createNewLetter() {
-            const msg = prompt("כתבי הודעה אישית לדוני:");
-            if(msg) {
+            const msg = prompt("כתבי מכתב שיופיע למעלה:");
+            if(msg !== null && msg !== "") {
                 state.lastMsg = msg;
-                saveData();
+                saveData(); // זה גם מעדכן את המסך מיד בתוך הפונקציה
             }
         }
 
-        function yardenMagic() {
-            alert(yardenPrompts[Math.floor(Math.random() * yardenPrompts.length)]);
+        function openDoniModal() {
+            const q = doniQuotes[Math.floor(Math.random() * doniQuotes.length)];
+            document.getElementById('doniText').innerText = q;
+            document.getElementById('doniModal').style.display = 'flex';
             confetti({ particleCount: 100, shapes: ['heart'], colors: ['#ff0000'], zIndex: 3000 });
         }
 
