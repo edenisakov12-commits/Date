@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date - Eden & Yarden</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #ffccd5;
+            --white: #ffffff;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--soft-pink), #fff5f7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.25);
+            text-align: center;
+            max-width: 350px;
+            width: 100%;
+            animation: floating 3.5s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        h1 { 
+            color: var(--primary-pink); 
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-love {
+            background-color: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-love:hover {
+            transform: scale(1.05);
+            background-color: #ff3355;
+        }
+
+        #status { 
+            margin-top: 20px; 
+            font-size: 0.85rem; 
+            color: #888;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Date</h1>
+        <p>עדן ❤️ ירדן (ורום)</p>
+        <button class="btn-love" onclick="sendLove()">שלח אהבה ✨</button>
+        <div id="status">מוכן לשליחה...</div>
+    </div>
+
+    <script>
+        // פונקציה לניהול מפתחות ב-localStorage למניעת דליפה ל-GitHub
+        function getCredentials() {
+            let apiKey = localStorage.getItem('DATE_API_KEY');
+            let binId = localStorage.getItem('DATE_BIN_ID');
+
+            if (!apiKey) {
+                apiKey = prompt("נא להזין API KEY (חד פעמי):");
+                if (apiKey) localStorage.setItem('DATE_API_KEY', apiKey);
+            }
+            if (!binId) {
+                binId = prompt("נא להזין BIN ID (חד פעמי):");
+                if (binId) localStorage.setItem('DATE_BIN_ID', binId);
+            }
+
+            return { apiKey, binId };
+        }
+
+        async function sendLove() {
+            const { apiKey, binId } = getCredentials();
+            
+            if (!apiKey || !binId) {
+                alert("חובה להזין פרטים כדי שהאפליקציה תעבוד.");
+                return;
+            }
+
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerText = "מעדכן את הענן...";
+
+            // אפקט קונפטי
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ff8fa3', '#ffffff']
+            });
+
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': apiKey
+                    },
+                    body: JSON.stringify({ 
+                        last_interaction: new Date().toLocaleString('he-IL'),
+                        app_name: "Date",
+                        status: "Love is in the air"
+                    })
+                });
+
+                if (response.ok) {
+                    statusDiv.innerText = "נשמר בהצלחה! ❤️";
+                } else {
+                    throw new Error("שגיאה בחיבור");
+                }
+            } catch (error) {
+                statusDiv.innerText = "תקלה בחיבור לענן.";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
