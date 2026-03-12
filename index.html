@@ -13,7 +13,6 @@
         .header { padding: 35px 20px 10px; text-align: center; }
         .header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; letter-spacing: -1px; }
 
-        /* סרגל קיצורי דרך לוואטסאפ */
         .parent-shortcuts {
             display: flex; justify-content: space-around; gap: 10px;
             margin: 10px auto 30px; padding: 20px 10px; width: 90%;
@@ -32,7 +31,6 @@
         .shortcut-btn span { font-size: 0.75rem; font-weight: 600; color: var(--dark); }
         .shortcut-btn:active { transform: translateY(3px); }
 
-        /* כפתורי דייטים */
         .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
         .card { 
             background: var(--white); border-radius: 28px; padding: 45px 10px; text-align: center; 
@@ -42,7 +40,6 @@
         .card .emoji { font-size: 3.2rem; display: block; margin-bottom: 12px; }
         .card span { font-weight: 600; font-size: 1.1rem; }
 
-        /* כפתור דוני הזוהר בבר התחתון */
         .doni-nav-btn {
             background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); 
             color: white; border-radius: 50%;
@@ -61,7 +58,6 @@
             100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); }
         }
 
-        /* ניווט תחתון */
         .bottom-nav {
             position: fixed; bottom: 25px; left: 20px; right: 20px;
             background: var(--dark); display: flex; justify-content: space-around; align-items: center;
@@ -71,7 +67,6 @@
         .nav-link { color: #888; text-align: center; cursor: pointer; font-size: 0.8rem; flex: 1; }
         .nav-link span { display: block; font-size: 1.7rem; margin-bottom: 2px; }
 
-        /* מודאלים */
         .modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 2000;
@@ -82,6 +77,8 @@
             padding: 40px 30px; text-align: center; position: relative;
         }
         .close-btn { position: absolute; top: 20px; left: 25px; font-size: 1.6rem; cursor: pointer; color: var(--gold); }
+        .btn-stack { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+        .btn-modal { padding: 16px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1rem; }
         
         .doni-title { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin: 10px 0; }
         #doniText { font-size: 1.3rem; line-height: 1.5; margin: 25px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; font-style: italic; }
@@ -102,7 +99,7 @@
             <div class="icon-circle">🏠</div><span>בדרך?</span>
         </div>
         <div class="shortcut-btn" onclick="shareWhatsApp('love')">
-            <div class="icon-circle">❤️</div><span>אוהבת</span>
+            <div class="icon-circle">❤️</div><span>אהבה</span>
         </div>
     </div>
 
@@ -124,10 +121,10 @@
     <div id="doniModal" class="modal">
         <div class="modal-content" style="border-top: 6px solid var(--gold);">
             <span class="close-btn" onclick="closeAll()">✕</span>
-            <div style="font-size:3rem; margin-bottom: 5px;">👑</div>
+            <div style="font-size:3rem;">👑</div>
             <div class="doni-title">מסר מהלב לעדן</div>
             <div id="doniText"></div>
-            <button style="background:var(--dark); color:var(--gold); border:1px solid var(--gold); padding:16px; border-radius:50px; width:100%; font-weight:bold; cursor:pointer;" onclick="closeAll()">אני איתך בזה, אהובתי ❤️</button>
+            <button class="btn-modal" style="background:var(--dark); color:var(--gold); border:1px solid var(--gold);" onclick="closeAll()">סגור</button>
         </div>
     </div>
 
@@ -136,7 +133,10 @@
             <span class="close-btn" onclick="closeAll()">✕</span>
             <div style="font-size:4rem; cursor:pointer;" onclick="reroll()">🎲</div>
             <div id="ideaText" style="font-family:'Playfair Display'; font-size:1.6rem; margin:25px 0; min-height:100px; display:flex; align-items:center; justify-content:center;"></div>
-            <button style="background:var(--gold); color:white; border:none; padding:18px; border-radius:50px; width:100%; font-weight:bold; font-size:1.1rem;" onclick="saveTo('done')">זה הדייט שלנו! ✨</button>
+            <div class="btn-stack">
+                <button class="btn-modal" style="background:var(--gold); color:white;" onclick="saveTo('done')">זה הדייט שלנו! ✨</button>
+                <button class="btn-modal" style="background:var(--bg); color:var(--dark); border:1px solid var(--soft-gold);" onclick="saveTo('maybe')">להוסיף להתלבטויות 🤔</button>
+            </div>
         </div>
     </div>
 
@@ -150,37 +150,47 @@
 
     <script>
         const database = {
-            home: ["ערב סושי ויין", "מרתון סרטים שקט", "ספא ביתי עם עיסוי", "פיקניק על השטיח בסלון", "ערב טעימות גבינות", "שיחה עמוקה מול הנרות", "סדנת ציור משותפת"],
-            out: ["המרינה באשקלון", "הגן הלאומי בשקיעה", "גלידה וסיבוב בחוף", "מסעדה רומנטית באזור", "טיול לילה בטיילת", "צפייה בכוכבים בדיונות"]
+            home: [
+                "ערב סושי ויין יוקרתי", "מרתון סרטים עם פופקורן וכרבוליות", "ספא ביתי עם עיסוי בשמנים", "פיקניק על השטיח בסלון", "ערב טעימות גבינות ויין", 
+                "שיחה עמוקה מול נרות דולקים", "סדנת ציור משותפת על קנבס", "ערב קוקטיילים ביתי בהכנה עצמית", "תחרות בישול זוגית (מנה מנצחת!)", 
+                "ערב משחקי קופסא של פעם", "הקרנת סרטון חתונה/זכרונות מהטלפון", "ערב שוקו חם ומרשמלו מול סרט נוסטלגי", "סדנת אפייה של קינוח מושחת", 
+                "בניית לוח חזון (Vision Board) משותף", "ערב פלייליסטים - כל אחד בוחר שירים לשני", "פיצה ביתית מאפס עם תוספות משוגעות", 
+                "ערב שאלות 'עד כמה אנחנו מכירים'", "סדנת יוגה או מתיחות זוגית", "ערב גלידה עם כל התוספות האפשריות"
+            ],
+            out: [
+                "המרינה באשקלון בשקיעה", "טיול לילה בגן הלאומי", "גלידה וסיבוב על החוף", "ערב בבר מקומי עם מוזיקה טובה", "טיול לילה בטיילת החדשה", 
+                "צפייה בכוכבים בדיונות של ניצנים", "ארוחת ערב איטלקית במסעדה", "פיקניק בחוף זיקים", "ביקור ביקב באזור לכיש", "סרט בקולנוע עם פופקורן ענק", 
+                "קטיף עצמי במושב קרוב", "נסיעה לעצירה לקפה בתחנת דלק נידחת", "סיבוב בשוק של אשקלון בשישי בבוקר", "סדנת קרמיקה או יצירה באזור", 
+                "טיול רגלי בנמל בשעות הערב", "ערב באולינג תחרותי", "ישיבה על בירה מול הים", "חיפוש אחר הקינוח הכי טוב בעיר", "נסיעה ארוכה עם מוזיקה טובה בלי יעד"
+            ]
         };
 
         const doniQuotes = [
-            "דוני, תסתכל עליה. היא לא רק אשתו של חייך, היא האמא של הילד שלך. תזכיר לה היום כמה היא גיבורה.",
-            "לפעמים בתוך השגרה של החיתולים והעבודה, קל לשכוח - היא החברה הכי טובה שלך. תן לה נשיקה ארוכה היום.",
-            "דוני, תזכורת: עדן צריכה לדעת שהיא עדיין האישה הכי יפה בעולם בעיניים שלך. תגיד לה את זה עכשיו.",
-            "הבית שלכם הוא המבצר שלכם. תודה לה על כל האהבה שהיא מכניסה בו כל יום.",
-            "להיות הורים זה אתגר, אבל לעשות את זה איתה? זה הפרס הכי גדול שקיבלת.",
-            "קח נשימה עמוקה. תסתכל על רום ועל עדן. זכית בכל הקופה, דוני.",
-            "משימה לדוני: היום בערב, כשהקטן ישן, תכין לה תה או יין ותקשיב לה 10 דקות בלי טלפון.",
-            "היא הלב של הבית הזה. אל תיתן ליום לעבור בלי שהיא תרגיש את זה."
+            "דוני, מבט אחד עליה יזכיר לך שהיא הלב של הבית והאמא הכי מדהימה שיכולת לבקש לרום.",
+            "בתוך השגרה, אל תשכח - היא החברה הכי טובה שלך. תן לה נשיקה ארוכה היום.",
+            "דוני, תזכורת: היא צריכה לשמוע ממך שהיא עדיין הכי יפה בעולם בעיניים שלך.",
+            "תודה לה על כל האהבה והחום שהיא מכניסה לחיים שלך ושל רום בכל יום.",
+            "להיות הורים זה אתגר, אבל לעשות את זה יחד איתה זה הפרס הכי גדול שיש.",
+            "קח נשימה עמוקה. תסתכל על המשפחה שבניתם. זכית בכל הקופה, דוני.",
+            "משימה קטנה: הערב, כשהקטן ישן, תכין לה משהו לשתות ותקשיב לה בלי טלפון.",
+            "היא הלב הפועם של הבית הזה. אל תיתן ליום לעבור בלי שהיא תרגיש כמה היא מוערכת."
         ];
 
         let quotePool = [...doniQuotes];
 
         function shareWhatsApp(type) {
             let text = "";
-            if(type === 'baby') text = "היי, רום רעב! 🍼 צריך להביא מטרנה בהקדם 🍼🍼🍼";
+            if(type === 'baby') text = "רום רעב! 🍼 יש להביא מטרנה בהקדם 🍼🍼🍼";
             if(type === 'milk') text = "לא לשכוח להביא חלב בדרך הביתה! 🥛🛒 שיהיה לנו לקפה של הבוקר ☕";
-            if(type === 'home') text = "מתי את/ה מגיע/ה? מחכים בבית בגעגועים! 🏠❤️";
+            if(type === 'home') text = "מתי הגעה הביתה? יש המתנה בגעגועים! 🏠❤️";
             if(type === 'love') {
-                const loves = ["סתם רציתי להגיד שאני אוהבת אותך הכי בעולם ❤️", "אתה אבא מדהים ובעל מושלם, תודה על הכל ✨", "מחכה כבר לזמן שלנו יחד בערב... 🥰"];
+                const loves = ["רציתי להגיד שהאהבה כאן היא הכי גדולה בעולם ❤️", "יש כאן אבא מדהים ובעל מושלם, תודה על הכל ✨", "ציפייה גדולה לזמן שלנו יחד בערב... 🥰"];
                 text = loves[Math.floor(Math.random() * loves.length)];
             }
-            // שימוש ב-send ללא מספר טלפון כדי לאפשר בחירת איש קשר
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        let state = JSON.parse(localStorage.getItem('EY_SAVED_LISTS')) || { maybe: [], done: [] };
+        let state = JSON.parse(localStorage.getItem('EY_STATE_V2')) || { maybe: [], done: [] };
 
         function openGenerator(type) {
             currentCat = type; reroll();
@@ -188,16 +198,18 @@
         }
 
         function reroll() {
-            const list = database[currentCat] || ["עוד רעיונות בקרוב..."];
+            const list = database[currentCat];
             currentIdea = list[Math.floor(Math.random() * list.length)];
             document.getElementById('ideaText').innerText = currentIdea;
-            confetti({ particleCount: 50, spread: 60, colors: ['#D4AF37'], zIndex: 3000 });
+            confetti({ particleCount: 50, colors: ['#D4AF37'], zIndex: 3000 });
         }
 
         function saveTo(target) {
-            state[target].push(currentIdea);
-            localStorage.setItem('EY_SAVED_LISTS', JSON.stringify(state));
-            confetti({ particleCount: 150, shapes: ['heart'], zIndex: 3000 });
+            if(!state[target].includes(currentIdea)) {
+                state[target].push(currentIdea);
+                localStorage.setItem('EY_STATE_V2', JSON.stringify(state));
+            }
+            confetti({ particleCount: 150, shapes: [target==='done'?'heart':'circle'], zIndex: 3000 });
             closeAll();
         }
 
@@ -213,9 +225,9 @@
         function showList(type) {
             document.getElementById('listTitle').innerText = type === 'maybe' ? 'התלבטויות' : 'הדייטים שלנו';
             document.getElementById('listBody').innerHTML = state[type].map((item, i) => `
-                <div style="padding:15px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;">
+                <div style="padding:15px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
                     <span>${item}</span>
-                    <span style="color:#ccc; cursor:pointer;" onclick="deleteItem('${type}', ${i})">🗑️</span>
+                    <span style="color:#ccc; cursor:pointer; font-size:1.2rem;" onclick="deleteItem('${type}', ${i})">🗑️</span>
                 </div>
             `).join('') || "<p style='text-align:center; opacity:0.5;'>אין פריטים עדיין...</p>";
             document.getElementById('listModal').style.display = 'flex';
@@ -223,7 +235,7 @@
 
         function deleteItem(type, i) {
             state[type].splice(i, 1);
-            localStorage.setItem('EY_SAVED_LISTS', JSON.stringify(state));
+            localStorage.setItem('EY_STATE_V2', JSON.stringify(state));
             showList(type);
         }
 
