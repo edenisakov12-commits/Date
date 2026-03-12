@@ -8,21 +8,21 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root { --gold: #D4AF37; --dark: #1a1a1a; --bg: #fdfaf8; --white: #ffffff; --soft-gold: rgba(212, 175, 55, 0.2); }
-        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); color: var(--dark); margin: 0; padding-bottom: 140px; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); color: var(--dark); margin: 0; padding-bottom: 140px; overflow-x: hidden; }
 
-        .header { padding: 25px 20px 5px; text-align: center; flex-shrink: 0; }
-        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin: 0; color: var(--dark); }
+        .header { padding: 30px 20px 5px; text-align: center; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.8rem; margin: 0; color: var(--dark); }
 
-        /* בועת מכתב משופרת */
+        /* בועת מכתב - התיקון כאן */
         .top-letter-box {
             background: var(--white); border: 1.5px solid var(--gold); border-radius: 12px;
-            margin: 10px auto 20px; width: 85%; padding: 15px; position: relative;
+            margin: 10px auto 30px; width: 85%; padding: 15px; position: relative;
             box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1); text-align: center; min-height: 50px;
         }
         #top-msg { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; margin: 0; color: var(--dark); }
 
         /* כפתורים זה לצד זה */
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; flex-grow: 1; align-content: flex-start; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
         .card { 
             background: var(--white); border-radius: 25px; padding: 40px 10px; text-align: center; 
             cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.04); border: 1px solid var(--soft-gold);
@@ -30,7 +30,7 @@
         }
         .card:active { transform: scale(0.95); }
         .card .emoji { font-size: 3rem; display: block; margin-bottom: 10px; }
-        .card span { font-weight: 600; font-size: 1rem; color: var(--dark); }
+        .card span { font-weight: 600; font-size: 1.1rem; color: var(--dark); }
 
         /* כפתור דוני זהב */
         .yarden-btn {
@@ -50,10 +50,7 @@
             background: var(--white); width: 85%; max-width: 380px; border-radius: 35px; 
             padding: 35px; text-align: center; position: relative;
         }
-        
-        /* עיצוב מיוחד למודאל דוני */
         .doni-modal { background: linear-gradient(135deg, #fff 0%, #fff9e6 100%); border: 3px solid var(--gold); }
-
         .close-btn { position: absolute; top: 15px; left: 20px; font-size: 1.5rem; cursor: pointer; color: var(--gold); }
         .dice-icon { font-size: 3.5rem; cursor: pointer; display: inline-block; margin-bottom: 10px; }
         .idea-display { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 20px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.3; }
@@ -71,7 +68,7 @@
             background: var(--dark); display: flex; justify-content: space-around;
             padding: 18px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); z-index: 1500;
         }
-        .nav-link { color: #555; text-align: center; cursor: pointer; font-size: 0.75rem; }
+        .nav-link { color: #555; text-align: center; cursor: pointer; font-size: 0.8rem; }
         .nav-link.active { color: var(--gold); }
         .nav-link span { display: block; font-size: 1.6rem; margin-bottom: 4px; }
     </style>
@@ -80,9 +77,7 @@
 
     <div class="header"><h1>Eden & Yarden</h1></div>
 
-    <div class="top-letter-box">
-        <p id="top-msg">טוען מכתב... ✨</p>
-    </div>
+    <div class="top-letter-box"><p id="top-msg">טוען מכתב... ✨</p></div>
 
     <div class="main-grid">
         <div class="card" onclick="openGenerator('home')">
@@ -99,7 +94,7 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeAll()">✕</span>
             <div class="dice-icon" onclick="reroll()">🎲</div>
-            <div class="idea-display" id="ideaText">בוחרים דייט...</div>
+            <div class="idea-display" id="ideaText">בוחרים...</div>
             <div class="btn-stack">
                 <button class="btn-action" onclick="saveTo('maybe')">להוסיף להתלבטויות 🤔</button>
                 <button class="btn-action primary" onclick="saveTo('done')">את זה אנחנו רוצים! ✨</button>
@@ -113,7 +108,7 @@
             <div style="font-size: 3rem; margin-bottom: 10px;">👑</div>
             <h2 style="font-family:'Playfair Display'; color:var(--gold); margin:0;">לעיני דוני בלבד</h2>
             <div id="doniText" class="idea-display" style="font-size: 1.3rem;"></div>
-            <button class="btn-action primary" onclick="closeAll()">תודה אהובתי ❤️</button>
+            <button class="btn-action primary" onclick="closeAll()">אין בעיה, אעשה את זה! 👍</button>
         </div>
     </div>
 
@@ -137,12 +132,7 @@
             out: ["המרינה באשקלון", "הגן הלאומי אשקלון", "גלידה לילית במרינה", "יקב באזור לכיש", "סיור שוק אשקלון", "שקיעה בחוף בר כוכבא", "בירה בבר מקומי", "קפה בוקר מול הים", "טיילת אשקלון החדשה", "מסעדה במרינה", "חוף ניצנים בשקיעה", "נסיעה לחוף זיקים", "ארוחה איטלקית באזור", "קטיף עצמי במושבים", "ערב באולינג"]
         };
 
-        const doniQuotes = [
-            "דוני, היא האישה של חייך. תזכיר לה את זה היום.",
-            "חיבוק של 30 שניות - זו המשימה שלך לעכשיו.",
-            "תזכורת: הודעת 'אני אוהב אותך' באמצע היום עושה קסמים.",
-            "זכית במישהי מיוחדת במינה. תהיה הגבר שמגיע לה."
-        ];
+        const doniQuotes = ["דוני, היא האישה של חייך. תזכיר לה את זה היום.", "חיבוק של 30 שניות - זו המשימה שלך לעכשיו.", "תזכורת: הודעת 'אהבה' עושה קסמים.", "זכית במישהי מיוחדת במינה."];
 
         let state = { maybe: [], done: [], lastMsg: "עדן ❤️ ירדן" };
         let currentCat = '', currentIdea = '';
@@ -160,17 +150,20 @@
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${keys.binId}/latest`, { headers: { 'X-Master-Key': keys.apiKey } });
                 const result = await res.json();
                 state = result.record;
-                document.getElementById('top-msg').innerText = state.lastMsg;
+                // עדכון המסך בטעינה
+                document.getElementById('top-msg').innerText = state.lastMsg || "כתבו מכתב... ✨";
             } catch (e) { console.error("טעינה נכשלה"); }
         }
 
         async function saveData() {
             const keys = getAuth();
-            // עדכון מיידי במסך
+            // עדכון מיידי של הבועה למעלה
             document.getElementById('top-msg').innerText = state.lastMsg;
             
+            // שליחת כל המצב (State) לענן - זה התיקון הקריטי
             await fetch(`https://api.jsonbin.io/v3/b/${keys.binId}`, {
-                method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': keys.apiKey },
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'X-Master-Key': keys.apiKey },
                 body: JSON.stringify(state)
             });
         }
@@ -209,10 +202,10 @@
         }
 
         function createNewLetter() {
-            const msg = prompt("כתבי מכתב שיופיע למעלה:");
+            const msg = prompt("מה לכתוב במכתב שיופיע למעלה?");
             if(msg !== null && msg !== "") {
-                state.lastMsg = msg;
-                saveData(); // זה גם מעדכן את המסך מיד בתוך הפונקציה
+                state.lastMsg = msg; // מעדכן את המשתנה
+                saveData(); // שומר לענן ומעדכן את המסך מיד
             }
         }
 
