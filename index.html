@@ -13,34 +13,35 @@
         .header { padding: 35px 20px 10px; text-align: center; }
         .header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; letter-spacing: -1px; }
 
-        /* סרגל קיצורי דרך לוואטסאפ */
+        /* סרגל קיצורי דרך */
         .parent-shortcuts {
             display: flex; justify-content: space-around; gap: 10px;
             margin: 10px auto 30px; padding: 20px 10px; width: 90%;
             background: var(--white); border-radius: 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid var(--soft-gold);
         }
-        .shortcut-btn {
-            cursor: pointer; transition: all 0.2s ease;
-            display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1;
-        }
+        .shortcut-btn { cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
         .shortcut-btn .icon-circle {
-            width: 50px; height: 50px; background: var(--bg); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            width: 45px; height: 45px; background: var(--bg); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
             border: 1px solid var(--soft-gold);
         }
-        .shortcut-btn span { font-size: 0.75rem; font-weight: 600; color: var(--dark); }
+        .shortcut-btn span { font-size: 0.75rem; font-weight: 600; }
 
-        /* גריד כפתורים ראשי */
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
+        /* גריד כפתורים ראשי - 3 בשורה */
+        .main-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; 
+            padding: 0 15px; 
+        }
         .card { 
-            background: var(--white); border-radius: 28px; padding: 40px 10px; text-align: center; 
-            cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid var(--soft-gold);
+            background: var(--white); border-radius: 20px; padding: 25px 5px; text-align: center; 
+            cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.04); border: 1px solid var(--soft-gold);
             transition: 0.3s;
         }
-        .card.full { grid-column: span 2; padding: 25px; } /* כפתור המסכה לרוחב */
-        .card .emoji { font-size: 2.8rem; display: block; margin-bottom: 10px; }
-        .card span { font-weight: 600; font-size: 1.1rem; }
+        .card .emoji { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+        .card span { font-weight: 600; font-size: 0.9rem; line-height: 1.2; display: block; }
 
         /* כפתור דוני */
         .doni-nav-btn {
@@ -68,7 +69,7 @@
             height: 70px;
         }
         .nav-link { color: #888; text-align: center; cursor: pointer; font-size: 0.8rem; flex: 1; }
-        .nav-link span { display: block; font-size: 1.7rem; margin-bottom: 2px; }
+        .nav-link span { display: block; font-size: 1.6rem; margin-bottom: 2px; }
 
         /* מודאלים */
         .modal { 
@@ -84,10 +85,10 @@
         .btn-stack { display: flex; flex-direction: column; gap: 10px; width: 100%; }
         .btn-modal { padding: 16px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; font-size: 1rem; }
         
-        .list-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; text-align: right; }
-        .delete-btn { color: #ff4d4d; cursor: pointer; font-size: 1.2rem; padding: 5px; }
+        .list-item { padding: 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; text-align: right; gap: 10px; }
+        .delete-btn { color: #ff4d4d; cursor: pointer; font-size: 1.2rem; }
 
-        #doniText { font-size: 1.3rem; line-height: 1.5; margin: 25px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; font-style: italic; }
+        #ideaText, #doniText { font-size: 1.3rem; line-height: 1.5; margin: 25px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
@@ -98,13 +99,13 @@
         <div class="shortcut-btn" onclick="shareWhatsApp('baby')"><div class="icon-circle">🍼</div><span>מטרנה</span></div>
         <div class="shortcut-btn" onclick="shareWhatsApp('milk')"><div class="icon-circle">🥛</div><span>חלב</span></div>
         <div class="shortcut-btn" onclick="shareWhatsApp('home')"><div class="icon-circle">🏠</div><span>בדרך?</span></div>
-        <div class="shortcut-btn" onclick="shareWhatsApp('love')"><div class="icon-circle">❤️</div><span>אוהבת</span></div>
+        <div class="shortcut-btn" onclick="shareWhatsApp('love')"><div class="icon-circle">❤️</div><span>אהבה</span></div>
     </div>
 
     <div class="main-grid">
         <div class="card" onclick="openGenerator('home')"><span class="emoji">🏡</span><span>דייט בבית</span></div>
-        <div class="card" onclick="openGenerator('out')"><span class="emoji">🥂</span><span>בחוץ</span></div>
-        <div class="card full" onclick="openGenerator('spicy')"><span class="emoji">🎭</span><span>משחקי זוגיות נועזים</span></div>
+        <div class="card" onclick="openGenerator('out')"><span class="emoji">🥂</span><span>דייט בחוץ</span></div>
+        <div class="card" onclick="openGenerator('spicy')"><span class="emoji">🎭</span><span>משחקים</span></div>
     </div>
 
     <nav class="bottom-nav">
@@ -116,8 +117,8 @@
     <div id="genModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAll()">✕</span>
-            <div style="font-size:4rem; cursor:pointer;" onclick="reroll()">🎲</div>
-            <div id="ideaText" style="font-family:'Playfair Display'; font-size:1.6rem; margin:25px 0; min-height:100px; display:flex; align-items:center; justify-content:center;"></div>
+            <div style="font-size:3.5rem; cursor:pointer;" onclick="reroll()">🎲</div>
+            <div id="ideaText" style="font-family:'Playfair Display';"></div>
             <div class="btn-stack">
                 <button class="btn-modal" style="background:var(--gold); color:white;" onclick="saveTo('done')">זה הדייט שלנו! ✨</button>
                 <button class="btn-modal" style="background:var(--bg); color:var(--dark); border:1px solid var(--soft-gold);" onclick="saveTo('maybe')">להוסיף להתלבטויות 🤔</button>
@@ -130,7 +131,7 @@
             <span class="close-btn" onclick="closeAll()">✕</span>
             <div style="font-size:3rem;">👑</div>
             <div style="font-family:'Playfair Display'; color:var(--gold); font-size:1.8rem; margin:10px 0;">מסר מהלב לעדן</div>
-            <div id="doniText"></div>
+            <div id="doniText" style="font-style: italic;"></div>
             <button class="btn-modal" style="background:var(--dark); color:var(--gold);" onclick="closeAll()">סגור</button>
         </div>
     </div>
@@ -139,18 +140,18 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeAll()">✕</span>
             <h2 id="listTitle" style="color:var(--gold); font-family:'Playfair Display'; margin-bottom:20px;"></h2>
-            <div id="listBody" style="max-height:350px; overflow-y:auto; margin-top:10px;"></div>
+            <div id="listBody" style="max-height:350px; overflow-y:auto;"></div>
         </div>
     </div>
 
     <script>
         const database = {
-            home: ["ערב סושי ויין יוקרתי", "מרתון סרטים עם פופקורן", "ספא ביתי עם עיסוי", "פיקניק על השטיח בסלון", "ערב טעימות גבינות ויין", "שיחה עמוקה מול נרות דולקים", "סדנת ציור משותפת", "ערב קוקטיילים ביתי", "תחרות בישול זוגית", "פיצה ביתית מאפס", "ערב שאלות 'עד כמה אנחנו מכירים'", "סדנת אפייה מושחתת"],
-            out: ["המרינה באשקלון בשקיעה", "טיול לילה בגן הלאומי", "גלידה וסיבוב על החוף", "ערב בבר מקומי", "טיול לילה בטיילת", "צפייה בכוכבים בדיונות", "ארוחת ערב איטלקית", "פיקניק בחוף זיקים", "ביקור ביקב", "סרט בקולנוע עם פופקורן ענק"],
-            spicy: ["משחק תפקידים ספונטני", "סדנת עיסוי אירוטי זוגית", "לילה של 'אמת או חובה' נועז", "שימוש באביזרים חדשים", "ערב של פנטזיות - כל אחד כותב אחת", "ריקוד פרטי ומפתה", "משחק 'חפש את המטמון' בחדר השינה", "משימה נועזת במקום ציורי/חצי ציורי", "ערב ללא בגדים בלבד", "קריאת סיפור אירוטי יחד"]
+            home: ["ערב סושי ויין", "מרתון סרטים", "ספא ביתי", "פיקניק בסלון", "טעימות גבינות", "שיחה מול נרות", "סדנת ציור", "ערב קוקטיילים", "תחרות בישול", "פיצה ביתית מאפס"],
+            out: ["מרינה אשקלון בשקיעה", "גן לאומי בלילה", "גלידה בחוף", "בר מקומי", "טיילת אשקלון", "צפייה בכוכבים", "מסעדה איטלקית", "פיקניק בזיקים", "ביקור ביקב"],
+            spicy: ["משחק תפקידים ספונטני", "סדנת עיסוי אירוטי", "אמת או חובה נועז", "שימוש באביזרים", "ערב פנטזיות", "ריקוד פרטי ומפתה", "חפש את המטמון בחדר שינה"]
         };
 
-        const doniQuotes = ["דוני, היא הלב של הבית והאמא הכי מדהימה שיש.", "אל תשכח - היא החברה הכי טובה שלך. תן לה נשיקה ארוכה.", "תזכורת: היא צריכה לשמוע שהיא הכי יפה בעולם בעיניים שלך.", "זכית בכל הקופה, דוני. תסתכל על המשפחה שבניתם."];
+        const doniQuotes = ["דוני, היא הלב של הבית והאמא הכי מדהימה לרום.", "אל תשכח - היא החברה הכי טובה שלך. נשיקה ארוכה!", "תזכורת: היא הכי יפה בעולם בעיניים שלך.", "זכית בכל הקופה, דוני. תראה את המשפחה שבניתם."];
         let quotePool = [...doniQuotes];
 
         function shareWhatsApp(type) {
@@ -162,8 +163,8 @@
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        // ניהול רשימות
-        let state = JSON.parse(localStorage.getItem('EY_FINAL_LISTS')) || { maybe: [], done: [] };
+        let state = JSON.parse(localStorage.getItem('EY_V3_DATA')) || { maybe: [], done: [] };
+        let currentCat = '', currentIdea = '', currentListType = '';
 
         function openGenerator(type) {
             currentCat = type; reroll();
@@ -180,7 +181,7 @@
         function saveTo(target) {
             if(!state[target].includes(currentIdea)) {
                 state[target].push(currentIdea);
-                localStorage.setItem('EY_FINAL_LISTS', JSON.stringify(state));
+                localStorage.setItem('EY_V3_DATA', JSON.stringify(state));
             }
             confetti({ particleCount: 150, shapes: [target==='done'?'heart':'circle'], zIndex: 3000 });
             closeAll();
@@ -196,14 +197,14 @@
                     <span class="delete-btn" onclick="deleteItem(${i})">🗑️</span>
                     <span>${item}</span>
                 </div>
-            `).join('') : "<p style='text-align:center; opacity:0.5;'>הרשימה ריקה...</p>";
+            `).join('') : "<p style='text-align:center; opacity:0.5;'>אין כאן כלום עדיין...</p>";
             
             document.getElementById('listModal').style.display = 'flex';
         }
 
         function deleteItem(index) {
             state[currentListType].splice(index, 1);
-            localStorage.setItem('EY_FINAL_LISTS', JSON.stringify(state));
+            localStorage.setItem('EY_V3_DATA', JSON.stringify(state));
             showList(currentListType);
         }
 
