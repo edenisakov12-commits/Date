@@ -3,206 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Date - Eden & Yarden</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Assistant:wght@400;700&display=swap" rel="stylesheet">
+    <title>Date | Luxury Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Assistant:wght@300;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { 
-            --soft-rose: #f8e1e1; 
-            --deep-mauve: #4a3f54; 
-            --accent: #ff8fa3; 
-            --white: #ffffff; 
-        }
-        
-        body { 
-            font-family: 'Assistant', sans-serif; 
-            background: linear-gradient(to bottom, #fdfaf8, #f8e1e1); 
-            margin: 0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh; 
-            color: var(--deep-mauve); 
-            padding-bottom: 100px; 
+        :root {
+            --gold: #D4AF37;
+            --dark: #1a1a1a;
+            --bg: #f4f4f2;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.9);
         }
 
-        header h1 { 
-            font-family: 'Dancing Script', cursive; 
-            font-size: 3.5rem; 
-            margin: 30px 0 10px; 
-            color: var(--accent);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        body {
+            font-family: 'Assistant', sans-serif;
+            background-color: var(--bg);
+            color: var(--dark);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .live-note-preview { 
-            background: var(--white); 
-            border-radius: 20px; 
-            padding: 20px; 
-            margin-bottom: 25px; 
-            width: 85%; 
-            text-align: center; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-            border: 1px solid var(--soft-rose);
-            font-style: italic;
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--dark);
+            margin: 40px 0 10px;
+            letter-spacing: -2px;
         }
 
-        .main-wrapper { 
-            width: 90%; 
-            max-width: 400px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
+        /* תצוגת ההודעה מהענן */
+        .live-note-preview {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 10px 0 30px;
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--gold);
+            font-weight: 300;
+            font-size: 1.1rem;
         }
 
-        .cat-card { 
-            background: var(--white); 
-            border-radius: 25px; 
-            padding: 25px; 
-            text-align: center; 
-            cursor: pointer; 
-            box-shadow: 0 8px 15px rgba(0,0,0,0.04); 
-            transition: 0.3s ease; 
-            border: 1px solid #eee; 
+        .main-wrapper {
+            width: 90%;
+            max-width: 450px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding-bottom: 120px;
         }
 
-        .cat-card:active { transform: scale(0.95); }
-        .cat-card .emoji { font-size: 2.5rem; display: block; margin-bottom: 5px; }
-        .cat-card span { font-weight: 700; font-size: 1.2rem; }
-
-        .bottom-nav { 
-            position: fixed; 
-            bottom: 20px; 
-            left: 15px; 
-            right: 15px; 
-            background: rgba(255,255,255,0.95); 
-            backdrop-filter: blur(10px); 
-            display: flex; 
-            justify-content: space-around; 
-            padding: 15px; 
-            border-radius: 25px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-        }
-
-        .nav-item { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            cursor: pointer; 
-            font-size: 0.8rem; 
-            font-weight: 700; 
-            color: #aaa; 
-            transition: 0.2s;
-        }
-
-        .nav-item.active { color: var(--accent); }
-        .nav-item span { font-size: 1.6rem; margin-bottom: 3px; }
-
-        /* כפתור מיוחד לירדן */
-        .yarden-btn {
-            background: var(--accent);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: none;
-            font-weight: bold;
-            margin-top: 10px;
+        .cat-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px 15px;
+            text-align: center;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(212, 175, 55, 0.1);
         }
+
+        .cat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(212, 175, 55, 0.15); }
+        .cat-card .emoji { font-size: 2.5rem; display: block; margin-bottom: 10px; filter: grayscale(0.3); }
+        .cat-card span { font-weight: 600; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* כפתור ירדן דינמי צף */
+        .yarden-floating-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: var(--dark);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 99;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .yarden-floating-btn:active { transform: scale(0.9); }
+
+        /* פופ-אפ (מודאל) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 400px;
+            border-radius: 30px;
+            padding: 30px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .close-modal { position: absolute; top: 20px; left: 20px; font-size: 1.5rem; cursor: pointer; color: var(--gold); }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .delete-btn { color: #ff4d4d; border: none; background: none; cursor: pointer; font-size: 0.8rem; }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        .action-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            width: 100%;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .reset-btn { background: #eee; color: #666; margin-top: 5px; }
+
+        /* ניווט תחתון */
+        .bottom-nav {
+            position: fixed; bottom: 20px; left: 20px; right: 20px;
+            background: var(--dark);
+            display: flex; justify-content: space-around;
+            padding: 15px; border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .nav-item { color: #888; text-align: center; cursor: pointer; transition: 0.3s; }
+        .nav-item.active { color: var(--gold); }
+        .nav-item span { display: block; font-size: 1.5rem; }
     </style>
 </head>
 <body>
 
     <header><h1>Date</h1></header>
 
-    <div class="main-wrapper" id="menu-screen">
-        <div class="live-note-preview" id="main-preview">מתחבר לענן... ✨</div>
-        
-        <div class="cat-card" onclick="triggerLove('דייט בבית נבחר! 🏠')">
-            <span class="emoji">🏡</span><span>דייט בבית</span>
-        </div>
-        
-        <div class="cat-card" onclick="triggerLove('יוצאים לבלות! 🥂')">
-            <span class="emoji">🥂</span><span>יוצאים החוצה</span>
-        </div>
+    <div class="live-note-preview" id="main-preview">מתחבר לאירוע היוקרתי... ✨</div>
 
-        <button class="yarden-btn" onclick="sendLoveSignal()">כפתור מיוחד לירדן ❤️</button>
+    <div class="main-wrapper">
+        <div class="cat-card" onclick="openModal('homeDate')">
+            <span class="emoji">🏡</span><span>בית</span>
+        </div>
+        <div class="cat-card" onclick="openModal('outDate')">
+            <span class="emoji">🥂</span><span>בחוץ</span>
+        </div>
+        <div class="cat-card" onclick="openModal('maybeModal')">
+            <span class="emoji">🤔</span><span>אולי</span>
+        </div>
+        <div class="cat-card" onclick="openModal('doneModal')">
+            <span class="emoji">🎬</span><span>עשינו</span>
+        </div>
+    </div>
+
+    <button class="yarden-floating-btn" onclick="yardenMagic()">עבור ירדן ❤️</button>
+
+    <div id="appModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">✕</span>
+            <h2 id="modalTitle" style="font-family: 'Playfair Display'; color: var(--gold);">כותרת</h2>
+            <div id="modalBody"></div>
+            <div id="modalInputArea">
+                <input type="text" id="newItemInput" placeholder="הוסיפו משהו חדש...">
+                <button class="action-btn" onclick="addItem()">הוספה</button>
+                <button class="action-btn reset-btn" onclick="resetItems()">איפוס הכל</button>
+            </div>
+        </div>
     </div>
 
     <nav class="bottom-nav">
         <div class="nav-item active"><span>🏠</span>בית</div>
-        <div class="nav-item" onclick="alert('רשימת ההתלבטויות בטעינה...')"><span>🤔</span>אולי</div>
-        <div class="nav-item" onclick="alert('כל הזכרונות שלנו כאן ✨')"><span>🎬</span>עשינו</div>
-        <div class="nav-item" onclick="alert('כותב מכתב חדש...')"><span>📝</span>מכתב</div>
+        <div class="nav-item" onclick="openModal('maybeModal')"><span>🤔</span>אולי</div>
+        <div class="nav-item" onclick="openModal('doneModal')"><span>🎬</span>עשינו</div>
+        <div class="nav-item" onclick="openModal('letterModal')"><span>📝</span>מכתב</div>
     </nav>
 
     <script>
-        // פונקציה לקבלת מפתחות מהזיכרון או מהמשתמש
-        function getKeys() {
-            let apiKey = localStorage.getItem('DATE_API_KEY');
-            let binId = localStorage.getItem('DATE_BIN_ID');
+        let currentCategory = '';
+        let appData = { maybe: [], done: [], letters: [], home: [], out: [] };
 
-            if (!apiKey) {
-                apiKey = prompt("נא להזין API KEY (חד פעמי):");
-                if (apiKey) localStorage.setItem('DATE_API_KEY', apiKey);
-            }
-            if (!binId) {
-                binId = prompt("נא להזין BIN ID (חד פעמי):");
-                if (binId) localStorage.setItem('DATE_BIN_ID', binId);
-            }
-            return { apiKey, binId };
-        }
-
-        // טעינת הודעה מהענן
-        async function loadNote() {
+        async function init() {
             const { apiKey, binId } = getKeys();
-            if (!apiKey || !binId) {
-                document.getElementById('main-preview').innerText = "אנא רעננו והזינו מפתחות 🔑";
-                return;
-            }
-
+            if (!apiKey || !binId) return;
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
                     headers: { 'X-Master-Key': apiKey }
                 });
                 const data = await res.json();
-                document.getElementById('main-preview').innerText = data.record.message || "עדן ❤️ ירדן";
-            } catch(e) {
-                document.getElementById('main-preview').innerText = "שגיאה בסנכרון ❌";
-            }
+                appData = data.record.appData || appData;
+                document.getElementById('main-preview').innerText = data.record.lastMsg || "ברוכים הבאים לעולם שלכם";
+            } catch (e) { console.error("Sync Error"); }
         }
 
-        // פונקציית קונפטי והודעה
-        function triggerLove(msg) {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#ff8fa3', '#f8e1e1']
-            });
-            alert(msg);
+        function getKeys() {
+            let k = localStorage.getItem('D_KEY'), b = localStorage.getItem('D_BIN');
+            if (!k) { k = prompt("API KEY:"); localStorage.setItem('D_KEY', k); }
+            if (!b) { b = prompt("BIN ID:"); localStorage.setItem('D_BIN', b); }
+            return { apiKey: k, binId: b };
         }
 
-        // שליחת עדכון לענן (כפתור ירדן)
-        async function sendLoveSignal() {
-            const { apiKey, binId } = getKeys();
-            const preview = document.getElementById('main-preview');
-            preview.innerText = "שולח אהבה לירדן...";
+        function openModal(type) {
+            currentCategory = type;
+            const modal = document.getElementById('appModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            modal.style.display = 'flex';
+
+            if(type === 'maybeModal') title.innerText = 'התלבטויות';
+            else if(type === 'doneModal') title.innerText = 'דייטים שעשינו';
+            else if(type === 'letterModal') title.innerText = 'מכתבים';
+            else title.innerText = 'רעיונות';
+
+            renderList();
+        }
+
+        function renderList() {
+            const body = document.getElementById('modalBody');
+            let list = [];
+            if(currentCategory === 'maybeModal') list = appData.maybe;
+            else if(currentCategory === 'doneModal') list = appData.done;
+            else if(currentCategory === 'letterModal') list = appData.letters;
+
+            body.innerHTML = list.map((item, index) => `
+                <div class="list-item">
+                    <span>${item}</span>
+                    <button class="delete-btn" onclick="deleteItem(${index})">מחיקה</button>
+                </div>
+            `).join('');
+        }
+
+        async function addItem() {
+            const val = document.getElementById('newItemInput').value;
+            if(!val) return;
+            if(currentCategory === 'maybeModal') appData.maybe.push(val);
+            else if(currentCategory === 'doneModal') appData.done.push(val);
+            else if(currentCategory === 'letterModal') appData.letters.push(`${new Date().toLocaleDateString()}: ${val}`);
             
-            try {
-                await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', 'X-Master-Key': apiKey },
-                    body: JSON.stringify({ message: "ירדן שלחה אהבה! ❤️", last_update: new Date().toLocaleString() })
-                });
-                triggerLove("הודעה נשלחה בהצלחה!");
-                loadNote();
-            } catch (e) {
-                alert("תקלה בשליחה");
-            }
+            document.getElementById('newItemInput').value = '';
+            renderList();
+            saveToCloud();
         }
 
-        // הפעלה ראשונית
-        loadNote();
+        function deleteItem(index) {
+            if(currentCategory === 'maybeModal') appData.maybe.splice(index, 1);
+            else if(currentCategory === 'doneModal') appData.done.splice(index, 1);
+            else if(currentCategory === 'letterModal') appData.letters.splice(index, 1);
+            renderList();
+            saveToCloud();
+        }
+
+        function resetItems() {
+            if(!confirm("לאפס הכל?")) return;
+            if(currentCategory === 'maybeModal') appData.maybe = [];
+            else if(currentCategory === 'doneModal') appData.done = [];
+            else if(currentCategory === 'letterModal') appData.letters = [];
+            renderList();
+            saveToCloud();
+        }
+
+        async function saveToCloud(msg = "") {
+            const { apiKey, binId } = getKeys();
+            await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'X-Master-Key': apiKey },
+                body: JSON.stringify({ appData, lastMsg: msg || document.getElementById('main-preview').innerText })
+            });
+        }
+
+        function closeModal() { document.getElementById('appModal').style.display = 'none'; }
+
+        function yardenMagic() {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.8 }, colors: ['#D4AF37', '#ffffff'] });
+            const msg = "ירדן, את הכתר של הבית! ✨";
+            document.getElementById('main-preview').innerText = msg;
+            saveToCloud(msg);
+        }
+
+        init();
     </script>
 </body>
 </html>
