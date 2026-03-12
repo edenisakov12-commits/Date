@@ -3,112 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eden & Yarden | Luxury Private</title>
+    <title>Eden & Yarden | Soul & Home</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Assistant:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root { --gold: #D4AF37; --dark: #1a1a1a; --bg: #fdfaf8; --white: #ffffff; --soft-gold: rgba(212, 175, 55, 0.2); }
-        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); color: var(--dark); margin: 0; padding-bottom: 140px; overflow-x: hidden; }
+        :root { --gold: #D4AF37; --dark: #1a1a1a; --bg: #fdfaf8; --white: #ffffff; --soft-gold: rgba(212, 175, 55, 0.3); }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--bg); color: var(--dark); margin: 0; padding-bottom: 150px; overflow-x: hidden; }
 
-        .header { padding: 30px 20px 5px; text-align: center; }
-        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.8rem; margin: 0; color: var(--dark); }
+        .header { padding: 35px 20px 10px; text-align: center; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 2.6rem; letter-spacing: -1px; }
 
-        /* בועת מכתב - התיקון כאן */
-        .top-letter-box {
-            background: var(--white); border: 1.5px solid var(--gold); border-radius: 12px;
-            margin: 10px auto 30px; width: 85%; padding: 15px; position: relative;
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1); text-align: center; min-height: 50px;
+        /* סרגל קיצורי דרך לוואטסאפ */
+        .parent-shortcuts {
+            display: flex; justify-content: space-around; gap: 10px;
+            margin: 10px auto 30px; padding: 20px 10px; width: 90%;
+            background: var(--white); border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid var(--soft-gold);
         }
-        #top-msg { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; margin: 0; color: var(--dark); }
+        .shortcut-btn {
+            cursor: pointer; transition: all 0.2s ease;
+            display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1;
+        }
+        .shortcut-btn .icon-circle {
+            width: 50px; height: 50px; background: var(--bg); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            border: 1px solid var(--soft-gold);
+        }
+        .shortcut-btn span { font-size: 0.75rem; font-weight: 600; color: var(--dark); }
+        .shortcut-btn:active { transform: translateY(3px); }
 
-        /* כפתורים זה לצד זה */
+        /* כפתורי דייטים */
         .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
         .card { 
-            background: var(--white); border-radius: 25px; padding: 40px 10px; text-align: center; 
-            cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.04); border: 1px solid var(--soft-gold);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--white); border-radius: 28px; padding: 45px 10px; text-align: center; 
+            cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.04); border: 1px solid var(--soft-gold);
+            transition: 0.3s;
         }
-        .card:active { transform: scale(0.95); }
-        .card .emoji { font-size: 3rem; display: block; margin-bottom: 10px; }
-        .card span { font-weight: 600; font-size: 1.1rem; color: var(--dark); }
+        .card .emoji { font-size: 3.2rem; display: block; margin-bottom: 12px; }
+        .card span { font-weight: 600; font-size: 1.1rem; }
 
-        /* כפתור דוני זהב */
-        .yarden-btn {
-            position: fixed; bottom: 135px; left: 25px; background: var(--gold);
-            color: var(--white); border: 2px solid var(--white); padding: 12px 28px;
-            border-radius: 50px; font-weight: 800; font-size: 1.1rem; z-index: 1001; 
-            cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        /* כפתור דוני הזוהר בבר התחתון */
+        .doni-nav-btn {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); 
+            color: white; border-radius: 50%;
+            width: 75px; height: 75px; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.1rem; cursor: pointer;
+            position: relative; top: -20px;
+            box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6);
+            animation: pulse-gold 2s infinite;
+            border: 4px solid var(--white);
         }
 
-        /* מודאלים */
-        .modal { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 2000;
-            justify-content: center; align-items: center;
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); }
+            50% { transform: scale(1.05); }
+            70% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); }
         }
-        .modal-content { 
-            background: var(--white); width: 85%; max-width: 380px; border-radius: 35px; 
-            padding: 35px; text-align: center; position: relative;
-        }
-        .doni-modal { background: linear-gradient(135deg, #fff 0%, #fff9e6 100%); border: 3px solid var(--gold); }
-        .close-btn { position: absolute; top: 15px; left: 20px; font-size: 1.5rem; cursor: pointer; color: var(--gold); }
-        .dice-icon { font-size: 3.5rem; cursor: pointer; display: inline-block; margin-bottom: 10px; }
-        .idea-display { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 20px 0; min-height: 80px; display: flex; align-items: center; justify-content: center; line-height: 1.3; }
-        
-        .btn-stack { display: flex; flex-direction: column; gap: 12px; }
-        .btn-action { background: var(--dark); color: var(--gold); border: 1px solid var(--gold); padding: 15px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .btn-action.primary { background: var(--gold); color: white; border: none; }
-
-        .list-container { max-height: 300px; overflow-y: auto; text-align: right; }
-        .list-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
 
         /* ניווט תחתון */
         .bottom-nav {
             position: fixed; bottom: 25px; left: 20px; right: 20px;
-            background: var(--dark); display: flex; justify-content: space-around;
-            padding: 18px; border-radius: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); z-index: 1500;
+            background: var(--dark); display: flex; justify-content: space-around; align-items: center;
+            padding: 10px 10px; border-radius: 40px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); z-index: 1500;
+            height: 70px;
         }
-        .nav-link { color: #555; text-align: center; cursor: pointer; font-size: 0.8rem; }
-        .nav-link.active { color: var(--gold); }
-        .nav-link span { display: block; font-size: 1.6rem; margin-bottom: 4px; }
+        .nav-link { color: #888; text-align: center; cursor: pointer; font-size: 0.8rem; flex: 1; }
+        .nav-link span { display: block; font-size: 1.7rem; margin-bottom: 2px; }
+
+        /* מודאלים */
+        .modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 2000;
+            justify-content: center; align-items: center;
+        }
+        .modal-content { 
+            background: var(--white); width: 85%; max-width: 380px; border-radius: 40px; 
+            padding: 40px 30px; text-align: center; position: relative;
+        }
+        .close-btn { position: absolute; top: 20px; left: 25px; font-size: 1.6rem; cursor: pointer; color: var(--gold); }
+        
+        .doni-title { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin: 10px 0; }
+        #doniText { font-size: 1.3rem; line-height: 1.5; margin: 25px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; font-style: italic; }
     </style>
 </head>
 <body>
 
     <div class="header"><h1>Eden & Yarden</h1></div>
 
-    <div class="top-letter-box"><p id="top-msg">טוען מכתב... ✨</p></div>
+    <div class="parent-shortcuts">
+        <div class="shortcut-btn" onclick="shareWhatsApp('baby')">
+            <div class="icon-circle">🍼</div><span>מטרנה</span>
+        </div>
+        <div class="shortcut-btn" onclick="shareWhatsApp('milk')">
+            <div class="icon-circle">🥛</div><span>חלב</span>
+        </div>
+        <div class="shortcut-btn" onclick="shareWhatsApp('home')">
+            <div class="icon-circle">🏠</div><span>בדרך?</span>
+        </div>
+        <div class="shortcut-btn" onclick="shareWhatsApp('love')">
+            <div class="icon-circle">❤️</div><span>אוהבת</span>
+        </div>
+    </div>
 
     <div class="main-grid">
         <div class="card" onclick="openGenerator('home')">
-            <span class="emoji">🏡</span><span>בבית</span>
+            <span class="emoji">🏡</span><span>דייט בבית</span>
         </div>
         <div class="card" onclick="openGenerator('out')">
             <span class="emoji">🥂</span><span>בחוץ</span>
         </div>
     </div>
 
-    <button class="yarden-btn" onclick="openDoniModal()">דוני 🔐</button>
+    <nav class="bottom-nav">
+        <div class="nav-link" onclick="showList('maybe')"><span>🤔</span>התלבטויות</div>
+        <div class="doni-nav-btn" onclick="openDoniModal()">דוני</div>
+        <div class="nav-link" onclick="showList('done')"><span>🎬</span>הדייטים</div>
+    </nav>
+
+    <div id="doniModal" class="modal">
+        <div class="modal-content" style="border-top: 6px solid var(--gold);">
+            <span class="close-btn" onclick="closeAll()">✕</span>
+            <div style="font-size:3rem; margin-bottom: 5px;">👑</div>
+            <div class="doni-title">מסר מהלב לעדן</div>
+            <div id="doniText"></div>
+            <button style="background:var(--dark); color:var(--gold); border:1px solid var(--gold); padding:16px; border-radius:50px; width:100%; font-weight:bold; cursor:pointer;" onclick="closeAll()">אני איתך בזה, אהובתי ❤️</button>
+        </div>
+    </div>
 
     <div id="genModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeAll()">✕</span>
-            <div class="dice-icon" onclick="reroll()">🎲</div>
-            <div class="idea-display" id="ideaText">בוחרים...</div>
-            <div class="btn-stack">
-                <button class="btn-action" onclick="saveTo('maybe')">להוסיף להתלבטויות 🤔</button>
-                <button class="btn-action primary" onclick="saveTo('done')">את זה אנחנו רוצים! ✨</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="doniModal" class="modal">
-        <div class="modal-content doni-modal">
-            <span class="close-btn" onclick="closeAll()">✕</span>
-            <div style="font-size: 3rem; margin-bottom: 10px;">👑</div>
-            <h2 style="font-family:'Playfair Display'; color:var(--gold); margin:0;">לעיני דוני בלבד</h2>
-            <div id="doniText" class="idea-display" style="font-size: 1.3rem;"></div>
-            <button class="btn-action primary" onclick="closeAll()">אין בעיה, אעשה את זה! 👍</button>
+            <div style="font-size:4rem; cursor:pointer;" onclick="reroll()">🎲</div>
+            <div id="ideaText" style="font-family:'Playfair Display'; font-size:1.6rem; margin:25px 0; min-height:100px; display:flex; align-items:center; justify-content:center;"></div>
+            <button style="background:var(--gold); color:white; border:none; padding:18px; border-radius:50px; width:100%; font-weight:bold; font-size:1.1rem;" onclick="saveTo('done')">זה הדייט שלנו! ✨</button>
         </div>
     </div>
 
@@ -116,57 +144,43 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeAll()">✕</span>
             <h2 id="listTitle" style="color:var(--gold); font-family:'Playfair Display';">הרשימה</h2>
-            <div id="listBody" class="list-container"></div>
+            <div id="listBody" style="max-height:350px; overflow-y:auto; text-align:right; margin-top:20px;"></div>
         </div>
     </div>
 
-    <nav class="bottom-nav">
-        <div class="nav-link" onclick="showList('maybe')"><span>🤔</span>התלבטויות</div>
-        <div class="nav-link" onclick="showList('done')"><span>🎬</span>הדייטים</div>
-        <div class="nav-link" onclick="createNewLetter()"><span>📝</span>מכתב</div>
-    </nav>
-
     <script>
         const database = {
-            home: ["ערב סושי ביתי", "מרתון סרטים כשהתינוק ישן", "סדנת מסאז' זוגית", "פיקניק לילי במרפסת", "ערב שוקו ומרשמלו", "טעימות יין וגבינות", "משחקי קופסא זוגיים", "סדנת ציור ויין", "ערב שאלות עומק", "בישול ארוחה רומנטית", "ערב קוקטיילים ביתי", "בניית לוח חזון", "פונדו שוקולד ופירות", "ערב פלייליסט נוסטלגי", "ערב פיצה ביתית"],
-            out: ["המרינה באשקלון", "הגן הלאומי אשקלון", "גלידה לילית במרינה", "יקב באזור לכיש", "סיור שוק אשקלון", "שקיעה בחוף בר כוכבא", "בירה בבר מקומי", "קפה בוקר מול הים", "טיילת אשקלון החדשה", "מסעדה במרינה", "חוף ניצנים בשקיעה", "נסיעה לחוף זיקים", "ארוחה איטלקית באזור", "קטיף עצמי במושבים", "ערב באולינג"]
+            home: ["ערב סושי ויין", "מרתון סרטים שקט", "ספא ביתי עם עיסוי", "פיקניק על השטיח בסלון", "ערב טעימות גבינות", "שיחה עמוקה מול הנרות", "סדנת ציור משותפת"],
+            out: ["המרינה באשקלון", "הגן הלאומי בשקיעה", "גלידה וסיבוב בחוף", "מסעדה רומנטית באזור", "טיול לילה בטיילת", "צפייה בכוכבים בדיונות"]
         };
 
-        const doniQuotes = ["דוני, היא האישה של חייך. תזכיר לה את זה היום.", "חיבוק של 30 שניות - זו המשימה שלך לעכשיו.", "תזכורת: הודעת 'אהבה' עושה קסמים.", "זכית במישהי מיוחדת במינה."];
+        const doniQuotes = [
+            "דוני, תסתכל עליה. היא לא רק אשתו של חייך, היא האמא של הילד שלך. תזכיר לה היום כמה היא גיבורה.",
+            "לפעמים בתוך השגרה של החיתולים והעבודה, קל לשכוח - היא החברה הכי טובה שלך. תן לה נשיקה ארוכה היום.",
+            "דוני, תזכורת: עדן צריכה לדעת שהיא עדיין האישה הכי יפה בעולם בעיניים שלך. תגיד לה את זה עכשיו.",
+            "הבית שלכם הוא המבצר שלכם. תודה לה על כל האהבה שהיא מכניסה בו כל יום.",
+            "להיות הורים זה אתגר, אבל לעשות את זה איתה? זה הפרס הכי גדול שקיבלת.",
+            "קח נשימה עמוקה. תסתכל על רום ועל עדן. זכית בכל הקופה, דוני.",
+            "משימה לדוני: היום בערב, כשהקטן ישן, תכין לה תה או יין ותקשיב לה 10 דקות בלי טלפון.",
+            "היא הלב של הבית הזה. אל תיתן ליום לעבור בלי שהיא תרגיש את זה."
+        ];
 
-        let state = { maybe: [], done: [], lastMsg: "עדן ❤️ ירדן" };
-        let currentCat = '', currentIdea = '';
+        let quotePool = [...doniQuotes];
 
-        function getAuth() {
-            let k = localStorage.getItem('APP_K'), b = localStorage.getItem('APP_B');
-            if (!k) { k = prompt("נא להזין API KEY:"); if(k) localStorage.setItem('APP_K', k); }
-            if (!b) { b = prompt("נא להזין BIN ID:"); if(b) localStorage.setItem('APP_B', b); }
-            return { apiKey: k, binId: b };
+        function shareWhatsApp(type) {
+            let text = "";
+            if(type === 'baby') text = "היי, רום רעב! 🍼 צריך להביא מטרנה בהקדם 🍼🍼🍼";
+            if(type === 'milk') text = "לא לשכוח להביא חלב בדרך הביתה! 🥛🛒 שיהיה לנו לקפה של הבוקר ☕";
+            if(type === 'home') text = "מתי את/ה מגיע/ה? מחכים בבית בגעגועים! 🏠❤️";
+            if(type === 'love') {
+                const loves = ["סתם רציתי להגיד שאני אוהבת אותך הכי בעולם ❤️", "אתה אבא מדהים ובעל מושלם, תודה על הכל ✨", "מחכה כבר לזמן שלנו יחד בערב... 🥰"];
+                text = loves[Math.floor(Math.random() * loves.length)];
+            }
+            // שימוש ב-send ללא מספר טלפון כדי לאפשר בחירת איש קשר
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        async function loadData() {
-            const keys = getAuth(); if(!keys.apiKey) return;
-            try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${keys.binId}/latest`, { headers: { 'X-Master-Key': keys.apiKey } });
-                const result = await res.json();
-                state = result.record;
-                // עדכון המסך בטעינה
-                document.getElementById('top-msg').innerText = state.lastMsg || "כתבו מכתב... ✨";
-            } catch (e) { console.error("טעינה נכשלה"); }
-        }
-
-        async function saveData() {
-            const keys = getAuth();
-            // עדכון מיידי של הבועה למעלה
-            document.getElementById('top-msg').innerText = state.lastMsg;
-            
-            // שליחת כל המצב (State) לענן - זה התיקון הקריטי
-            await fetch(`https://api.jsonbin.io/v3/b/${keys.binId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'X-Master-Key': keys.apiKey },
-                body: JSON.stringify(state)
-            });
-        }
+        let state = JSON.parse(localStorage.getItem('EY_SAVED_LISTS')) || { maybe: [], done: [] };
 
         function openGenerator(type) {
             currentCat = type; reroll();
@@ -174,51 +188,46 @@
         }
 
         function reroll() {
-            const list = database[currentCat];
+            const list = database[currentCat] || ["עוד רעיונות בקרוב..."];
             currentIdea = list[Math.floor(Math.random() * list.length)];
             document.getElementById('ideaText').innerText = currentIdea;
-            confetti({ particleCount: 60, spread: 70, scalar: 3, shapes: ['circle'], colors: ['#D4AF37'], zIndex: 3000 });
+            confetti({ particleCount: 50, spread: 60, colors: ['#D4AF37'], zIndex: 3000 });
         }
 
         function saveTo(target) {
-            if(!state[target].includes(currentIdea)) state[target].push(currentIdea);
-            confetti({ particleCount: 150, spread: 70, shapes: [target === 'done' ? 'heart' : 'circle'], zIndex: 3000 });
-            saveData(); closeAll();
-        }
-
-        function showList(type) {
-            currentCat = type;
-            document.getElementById('listTitle').innerText = type === 'maybe' ? 'התלבטויות' : 'הדייטים שלנו';
-            const body = document.getElementById('listBody');
-            body.innerHTML = state[type].map((item, i) => `
-                <div class="list-item"><span>${item}</span><span onclick="deleteItem(${i})" style="cursor:pointer">🗑️</span></div>
-            `).join('') || '<p>הרשימה ריקה...</p>';
-            document.getElementById('listModal').style.display = 'flex';
-        }
-
-        function deleteItem(i) {
-            state[currentCat].splice(i, 1);
-            saveData(); showList(currentCat);
-        }
-
-        function createNewLetter() {
-            const msg = prompt("מה לכתוב במכתב שיופיע למעלה?");
-            if(msg !== null && msg !== "") {
-                state.lastMsg = msg; // מעדכן את המשתנה
-                saveData(); // שומר לענן ומעדכן את המסך מיד
-            }
+            state[target].push(currentIdea);
+            localStorage.setItem('EY_SAVED_LISTS', JSON.stringify(state));
+            confetti({ particleCount: 150, shapes: ['heart'], zIndex: 3000 });
+            closeAll();
         }
 
         function openDoniModal() {
-            const q = doniQuotes[Math.floor(Math.random() * doniQuotes.length)];
-            document.getElementById('doniText').innerText = q;
+            if (quotePool.length === 0) quotePool = [...doniQuotes];
+            const randomIndex = Math.floor(Math.random() * quotePool.length);
+            const quote = quotePool.splice(randomIndex, 1)[0];
+            document.getElementById('doniText').innerText = quote;
             document.getElementById('doniModal').style.display = 'flex';
-            confetti({ particleCount: 100, shapes: ['heart'], colors: ['#ff0000'], zIndex: 3000 });
+            confetti({ particleCount: 100, shapes: ['heart'], colors: ['#ff0000', '#D4AF37'], zIndex: 3000 });
+        }
+
+        function showList(type) {
+            document.getElementById('listTitle').innerText = type === 'maybe' ? 'התלבטויות' : 'הדייטים שלנו';
+            document.getElementById('listBody').innerHTML = state[type].map((item, i) => `
+                <div style="padding:15px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;">
+                    <span>${item}</span>
+                    <span style="color:#ccc; cursor:pointer;" onclick="deleteItem('${type}', ${i})">🗑️</span>
+                </div>
+            `).join('') || "<p style='text-align:center; opacity:0.5;'>אין פריטים עדיין...</p>";
+            document.getElementById('listModal').style.display = 'flex';
+        }
+
+        function deleteItem(type, i) {
+            state[type].splice(i, 1);
+            localStorage.setItem('EY_SAVED_LISTS', JSON.stringify(state));
+            showList(type);
         }
 
         function closeAll() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-
-        loadData();
     </script>
 </body>
 </html>
